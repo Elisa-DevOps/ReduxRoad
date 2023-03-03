@@ -1,7 +1,8 @@
 const initialWagonState = {
   supplies: 100,
   distance: 0,
-  days: 0
+  days: 0,
+  cash: 200
   };
 
   const reducer = (state = initialWagonState, action) => {
@@ -34,6 +35,33 @@ const initialWagonState = {
           };
         }
       }
+
+      case 'sell': {
+        if (action.type === 'sell') {
+            console.log('You are giving away 20 SUPPLIES in exchange to gain $5 CASH');
+            return {
+                ...state, supplies: state.supplies - 20, cash: state.cash + 5
+            };
+        }
+      }
+
+      case 'buy': {
+        if (action.type === 'buy') {
+            console.log('You are gaining 25 SUPPLIES in exchange to lose $15 CASH');
+            return {
+                ...state, supplies: state.supplies + 25, cash: state.cash - 15
+            };
+        }
+      }
+
+      case 'theft': {
+        if (action.type === 'theft') {
+            console.log('Outlaws stole half of your CASH');
+            return {
+                ...state, cash: state.cash / 2
+            };
+        }
+      }
       
       default: {
         return state;
@@ -57,4 +85,13 @@ wagon = reducer(wagon, {type: 'travel', payload: 3});
 console.log(wagon);
 
 wagon = reducer(wagon, {type: 'travel', payload: 8});
+console.log(wagon);
+
+wagon = reducer(wagon, {type: 'sell', payload: 1});
+console.log(wagon);
+
+wagon = reducer(wagon, {type: 'buy', payload: 1});
+console.log(wagon);
+
+wagon = reducer(wagon, {type: 'theft', payload: 1});
 console.log(wagon);
